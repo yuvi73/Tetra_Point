@@ -32,4 +32,12 @@ install-deps:
 # Test compilation
 test-compile: $(TARGET)
 	@echo "✅ Compilation successful!"
-	@echo "Run './tetralemma' to execute the program" 
+	@echo "Run './tetralemma' to execute the program"
+
+# Add rules for the TNN paper
+tnn_paper: tetralemma_neural_networks_paper.tex
+	pdflatex tetralemma_neural_networks_paper.tex
+	pdflatex tetralemma_neural_networks_paper.tex  # Run twice for references
+
+clean:
+	rm -f *.aux *.log *.out *.bbl *.blg *.pdf 
