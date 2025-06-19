@@ -20,21 +20,21 @@
 \maketitle
 
 \begin{abstract}
-We introduce Tetralemma Neural Networks (TNNs), a novel neural architecture that integrates the four-valued logic of Buddhist Catuṣkoṭi (tetralemma) with modern deep learning. Unlike traditional neural networks that operate on binary or fuzzy logic, TNNs represent each neuron's state as a tetrapoint in a four-dimensional logical space encompassing affirmation, negation, both, and neither. We demonstrate that TNNs can naturally model contradictions, uncertainty, and emptiness while maintaining end-to-end differentiability. Empirical results show that TNNs achieve superior performance on tasks involving paradoxical, incomplete, or contradictory information, opening new possibilities for AI systems that can reason with non-classical logic.
+We introduce Tetralemma Neural Networks (TNNs), a novel neural architecture that integrates the four-valued logic of Buddhist Catu\c{s}ko\.{t}i (tetralemma) with modern deep learning. Unlike traditional neural networks that operate on binary or fuzzy logic, TNNs represent each neuron's state as a tetrapoint in a four-dimensional logical space encompassing affirmation, negation, both, and neither. We demonstrate that TNNs can naturally model contradictions, uncertainty, and emptiness while maintaining end-to-end differentiability. Empirical results show that TNNs achieve superior performance on tasks involving paradoxical, incomplete, or contradictory information, opening new possibilities for AI systems that can reason with non-classical logic.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Neural Networks, Non-Classical Logic, Catuṣkoṭi, Tetralemma, Deep Learning, Buddhist Logic, Contradiction-Tolerant Computing
+Neural Networks, Non-Classical Logic, Catu\c{s}ko\.{t}i, Tetralemma, Deep Learning, Buddhist Logic, Contradiction-Tolerant Computing
 \end{IEEEkeywords}
 
 \section{Introduction}
-Classical artificial neural networks are fundamentally based on binary or continuous-valued logic, which can be limiting when dealing with paradoxes, contradictions, or incomplete information. In this paper, we introduce Tetralemma Neural Networks (TNNs), which extend the traditional neural paradigm by incorporating the four-valued logic of Buddhist Catuṣkoṭi:
+Classical artificial neural networks are fundamentally based on binary or continuous-valued logic, which can be limiting when dealing with paradoxes, contradictions, or incomplete information. In this paper, we introduce Tetralemma Neural Networks (TNNs), which extend the traditional neural paradigm by incorporating the four-valued logic of Buddhist Catu\c{s}ko\.{t}i:
 
 \begin{itemize}
 \item Affirmation (A): The proposition is true
-\item Negation (¬A): The proposition is false
-\item Both (A ∧ ¬A): The proposition is both true and false
-\item Neither (¬(A ∨ ¬A)): The proposition is neither true nor false
+\item Negation ($\neg$A): The proposition is false
+\item Both (A $\wedge$ $\neg$A): The proposition is both true and false
+\item Neither ($\neg$(A $\vee$ $\neg$A)): The proposition is neither true nor false
 \end{itemize}
 
 This logical structure, known as tetralemma, has been used for over two millennia in Buddhist philosophy to reason about paradoxes, emptiness, and the limits of conventional logic. By embedding this structure into neural computation, we create a new class of models capable of representing and reasoning with non-classical logical states.
@@ -62,7 +62,7 @@ TNNs build upon this work by providing a fully differentiable architecture that 
 
 \section{Tetralemma Neural Networks}
 \subsection{Mathematical Framework}
-A tetrapoint τ in a TNN is defined as:
+A tetrapoint $\tau$ in a TNN is defined as:
 
 \begin{equation}
 \tau = (a, \neg a, a \wedge \neg a, \neg(a \vee \neg a))
@@ -70,14 +70,14 @@ A tetrapoint τ in a TNN is defined as:
 
 where each component is constrained to [0,1] and represents the degree of truth for each logical position.
 
-The contradiction product ⊗ between two tetrapoints τ₁ and τ₂ is defined as:
+The contradiction product $\otimes$ between two tetrapoints $\tau_1$ and $\tau_2$ is defined as:
 
 \begin{equation}
-\tau₁ ⊗ \tau₂ = \begin{pmatrix}
-a₁a₂ \\
-\neg a₁ \vee \neg a₂ \\
-(a₁ \wedge \neg a₁)(a₂ \wedge \neg a₂) \\
-\neg((a₁ \vee \neg a₁) \wedge (a₂ \vee \neg a₂))
+\tau_1 \otimes \tau_2 = \begin{pmatrix}
+a_1a_2 \\
+\neg a_1 \vee \neg a_2 \\
+(a_1 \wedge \neg a_1)(a_2 \wedge \neg a_2) \\
+\neg((a_1 \vee \neg a_1) \wedge (a_2 \vee \neg a_2))
 \end{pmatrix}
 \end{equation}
 
@@ -92,7 +92,7 @@ A TNN consists of:
 \end{itemize}
 
 \subsection{Forward Pass}
-For a tetralemma neuron with input x:
+For a tetralemma neuron with input $x$:
 
 \begin{equation}
 \text{output} = \begin{pmatrix}
@@ -103,7 +103,7 @@ For a tetralemma neuron with input x:
 \end{pmatrix}
 \end{equation}
 
-where σ is a suitable activation function.
+where $\sigma$ is a suitable activation function.
 
 \section{Implementation}
 \subsection{Tetralemma Layer}
@@ -112,13 +112,13 @@ The core building block is the TetralemmaLayer:
 \begin{algorithm}[H]
 \caption{TetralemmaLayer Forward Pass}
 \begin{algorithmic}[1]
-\STATE \textbf{Input:} x ∈ ℝᵈ
-\STATE z = Wx + b
-\STATE a = σ(z)
-\STATE ¬a = 1 - a
-\STATE a∧¬a = a⊙¬a
-\STATE ¬(a∨¬a) = clip(1-(a+¬a), 0, 1)
-\STATE \textbf{return} [a, ¬a, a∧¬a, ¬(a∨¬a)]
+\STATE \textbf{Input:} $x \in \mathbb{R}^d$
+\STATE $z = Wx + b$
+\STATE $a = \sigma(z)$
+\STATE $\neg a = 1 - a$
+\STATE $a \wedge \neg a = a \odot \neg a$
+\STATE $\neg(a \vee \neg a) = \text{clip}(1-(a+\neg a), 0, 1)$
+\STATE \textbf{return} $[a, \neg a, a \wedge \neg a, \neg(a \vee \neg a)]$
 \end{algorithmic}
 \end{algorithm}
 
@@ -129,7 +129,7 @@ We introduce a novel attention mechanism that respects tetralemma logic:
 \text{Attention}(Q,K,V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}} + \alpha C(Q,K)\right)V
 \end{equation}
 
-where C(Q,K) computes contradiction scores between queries and keys.
+where $C(Q,K)$ computes contradiction scores between queries and keys.
 
 \section{Experimental Results}
 \subsection{Philosophical Text Classification}
